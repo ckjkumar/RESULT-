@@ -4,12 +4,13 @@
   <meta charset="UTF-8">
   <title>Message</title>
 
-  <!-- Mobile & Fullscreen Optimization -->
+  <!-- Mobile-friendly settings -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#ffffff">
 
   <style>
+    /* Basic reset for consistent layout */
     * {
       margin: 0;
       padding: 0;
@@ -29,9 +30,11 @@
       color: #1e1e1e;
     }
 
-    .message-box, .ps-box {
+    /* Boxes for message and PS */
+    .message-box,
+    .ps-box {
       background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px); /* Makes background soft */
       padding: 30px 40px;
       border-radius: 15px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -40,6 +43,7 @@
       margin-bottom: 30px;
     }
 
+    /* Each line shows up with delay 👀 */
     .line {
       font-size: 1.5em;
       margin: 15px 0;
@@ -47,15 +51,17 @@
       animation: fadeInUp 2s ease forwards;
     }
 
-    .line:nth-child(1)  { animation-delay: 0.5s; }
-    .line:nth-child(2)  { animation-delay: 2.5s; }
-    .line:nth-child(3)  { animation-delay: 4.5s; }
-    .line:nth-child(4)  { animation-delay: 6.5s; }
-    .line:nth-child(5)  { animation-delay: 8.5s; }
-    .line:nth-child(6)  { animation-delay: 10.5s; }
-    .line:nth-child(7)  { animation-delay: 12.5s; }
-    .line:nth-child(8)  { animation-delay: 14.5s; }
+    /* Delay timings for dramatic effect ⏳ */
+    .line:nth-child(1) { animation-delay: 0.5s; }
+    .line:nth-child(2) { animation-delay: 2.5s; }
+    .line:nth-child(3) { animation-delay: 4.5s; }
+    .line:nth-child(4) { animation-delay: 6.5s; }
+    .line:nth-child(5) { animation-delay: 8.5s; }
+    .line:nth-child(6) { animation-delay: 10.5s; }
+    .line:nth-child(7) { animation-delay: 12.5s; }
+    .line:nth-child(8) { animation-delay: 14.5s; }
 
+    /* PS note appears last 💬 */
     .ps-box {
       font-size: 1.1em;
       font-style: italic;
@@ -64,14 +70,16 @@
       animation-delay: 16.5s;
     }
 
+    /* Smooth fade and move up animation 💫 */
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Mobile responsiveness */
+    /* For small screens (mobile) 📱 */
     @media (max-width: 600px) {
-      .message-box, .ps-box {
+      .message-box,
+      .ps-box {
         padding: 20px 25px;
         font-size: 1em;
         margin-bottom: 20px;
@@ -89,6 +97,8 @@
   </style>
 </head>
 <body>
+
+  <!-- Main message display 😊 -->
   <div class="message-box">
     <div class="line">Hey you.</div>
     <div class="line">Yes, you.</div>
@@ -100,14 +110,41 @@
     <div class="line">You know, you can talk with me anytime, right? Come on.</div>
   </div>
 
+  <!-- PS message with a casual note 😅 -->
   <div class="ps-box">
     <p>PS: Phone is broken, no way to use anything. Just remembered Instagram password.</p>
   </div>
 
-  <!-- 🎵 Background Music -->
-  <audio autoplay loop style="display: none;">
+  <!-- Music element (initially muted) 🎵 -->
+  <audio id="bg-music" loop muted playsinline style="display: none;">
     <source src="flute-of-the-heart.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
+    Your browser doesn't support audio playback.
   </audio>
+
+  <script>
+    const audio = document.getElementById('bg-music');
+
+    // Try to autoplay music silently (some browsers allow this)
+    audio.play().catch(() => {
+      // If browser blocks it, nothing happens 😶
+    });
+
+    // On first click or touch, unmute and play 🎧
+    function startMusic() {
+      audio.muted = false;
+      audio.play().catch(err => {
+        console.log('Audio playback error:', err);
+      });
+
+      // Remove the event so it runs only once 👆
+      window.removeEventListener('click', startMusic);
+      window.removeEventListener('touchstart', startMusic);
+    }
+
+    // Listen for user's first interaction 😄
+    window.addEventListener('click', startMusic, { once: true });
+    window.addEventListener('touchstart', startMusic, { once: true });
+  </script>
+
 </body>
 </html>
