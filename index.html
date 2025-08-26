@@ -4,146 +4,206 @@
   <meta charset="UTF-8">
   <title>Message</title>
 
-  <!-- Mobile-friendly settings -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#ffffff">
 
   <style>
-    /* Basic reset for consistent layout */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
     }
 
     body {
       height: 100vh;
-      background: url('pankh.png') no-repeat center center fixed;
-      background-size: cover;
-      font-family: 'Segoe UI', sans-serif;
+      background: url('pankh.png') no-repeat center center fixed; 
+      background-size: cover; 
+      font-family: 'Segoe UI', sans-serif; 
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      color: #1e1e1e;
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 20px; 
+      color: #1e1e1e; 
     }
 
-    /* Boxes for message and PS */
-    .message-box,
-    .ps-box {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px); /* Makes background soft */
-      padding: 30px 40px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-      max-width: 600px;
-      text-align: center;
-      margin-bottom: 30px;
+    .message-box, .ps-box {
+      background: rgba(255, 255, 255, 0.2); 
+      backdrop-filter: blur(10px); 
+      padding: 30px 40px; 
+      border-radius: 15px; 
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); 
+      max-width: 600px; 
+      text-align: center; 
+      margin-bottom: 30px; 
     }
 
-    /* Each line shows up with delay 👀 */
     .line {
-      font-size: 1.5em;
-      margin: 15px 0;
-      opacity: 0;
-      animation: fadeInUp 2s ease forwards;
+      font-size: 1.5em; 
+      margin: 15px 0; 
+      opacity: 0; 
     }
 
-    /* Delay timings for dramatic effect ⏳ */
-    .line:nth-child(1) { animation-delay: 0.5s; }
-    .line:nth-child(2) { animation-delay: 2.5s; }
-    .line:nth-child(3) { animation-delay: 4.5s; }
-    .line:nth-child(4) { animation-delay: 6.5s; }
-    .line:nth-child(5) { animation-delay: 8.5s; }
-    .line:nth-child(6) { animation-delay: 10.5s; }
-    .line:nth-child(7) { animation-delay: 12.5s; }
-    .line:nth-child(8) { animation-delay: 14.5s; }
-
-    /* PS note appears last 💬 */
     .ps-box {
-      font-size: 1.1em;
-      font-style: italic;
-      opacity: 0;
-      animation: fadeInUp 2s ease forwards;
-      animation-delay: 16.5s;
+      font-size: 1.1em; 
+      font-style: italic; 
+      opacity: 0; 
     }
 
-    /* Smooth fade and move up animation 💫 */
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(20px); } 
+      to   { opacity: 1; transform: translateY(0); } 
     }
 
-    /* For small screens (mobile) 📱 */
     @media (max-width: 600px) {
-      .message-box,
-      .ps-box {
-        padding: 20px 25px;
-        font-size: 1em;
-        margin-bottom: 20px;
+      .message-box, .ps-box { 
+        padding: 20px 25px; 
+        font-size: 1em; 
+        margin-bottom: 20px; 
       }
-
-      .line {
-        font-size: 1.2em;
-        margin: 10px 0;
+      .line { 
+        font-size: 1.2em; 
+        margin: 10px 0; 
       }
-
-      .ps-box {
-        font-size: 1em;
+      .ps-box { 
+        font-size: 1em; 
       }
     }
+
+    #popup {
+      position: fixed; 
+      top: 0; left: 0;
+      width: 100%; height: 100%; 
+      display: none; 
+      justify-content: center; 
+      align-items: center; 
+      background: rgba(0,0,0,0.6); 
+      z-index: 1000; 
+    }
+
+    #popup .box {
+      background: url('banshuri.jpg') no-repeat center center; 
+      background-size: cover; 
+      padding: 30px; 
+      border-radius: 12px; 
+      text-align: center; 
+      max-width: 300px; 
+      width: 90%; 
+      color: #fff; 
+      box-shadow: 0 0 15px rgba(0,0,0,0.5); 
+    }
+
+    #popup h3 { margin-bottom: 10px; font-size: 1.2em; }
+    #popup p { font-size: 0.9em; margin-bottom: 20px; }
+
+    #popup button {
+      padding: 10px 15px; 
+      margin: 0 10px; 
+      border: none; 
+      border-radius: 6px; 
+      font-weight: bold; 
+      cursor: pointer; 
+    }
+
+    #denyBtn { background: #eee; color: #333; } 
+    #allowBtn { background: #007bff; color: #fff; } 
   </style>
 </head>
 <body>
 
-  <!-- Main message display 😊 -->
-  <div class="message-box">
+  <div class="message-box" id="messageBox">
     <div class="line">Hey you.</div>
     <div class="line">Yes, you.😌</div>
     <div class="line">How is the result?🎓</div>
     <div class="line">Good job if it is better than expected.💯</div>
     <div class="line">Congratulations.🎉</div>
     <div class="line">If not,</div>
-    <div class="line">Congratulations — welcome to life.😅</div>
+    <div class="line">Congratulations — welcome to life.</div>
     <div class="line">You know, you can talk with me anytime, right? 😞 </div>
   </div>
 
-  <!-- PS message with a casual note 😅 -->
-  <div class="ps-box">
+  <div class="ps-box" id="psBox">
     <p>PS: Phone is broken, no way to use anything. Just remembered Instagram password.😅</p>
   </div>
 
-  <!-- Music element (initially muted) 🎵 -->
-  <audio id="bg-music" loop muted playsinline style="display: none;">
+  <audio id="bg-music" loop muted playsinline style="display:none;">
     <source src="flute-of-the-heart.mp3" type="audio/mpeg">
     Your browser doesn't support audio playback.
   </audio>
 
+  <div id="popup">
+    <div class="box">
+      <h3>Here for you, and don't worry</h3>
+      <p>Do you want to play audio too?</p>
+      <div>
+        <button id="denyBtn">Deny</button>
+        <button id="allowBtn">Okay</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const audio = document.getElementById('bg-music');
+    const popup = document.getElementById('popup');
+    const denyBtn = document.getElementById('denyBtn');
+    const allowBtn = document.getElementById('allowBtn');
+    const messageBox = document.getElementById('messageBox');
+    const psBox = document.getElementById('psBox');
+    const lines = document.querySelectorAll('.line');
 
-    // Try to autoplay music silently (some browsers allow this)
-    audio.play().catch(() => {
-      // If browser blocks it, nothing happens 😶
-    });
+    const delays = [0.5, 2.5, 4.5, 6.5, 8.5, 10.5, 12.5, 14.5];
+    const psDelay = 16.5;
 
-    // On first click or touch, unmute and play 🎧
-    function startMusic() {
-      audio.muted = false;
-      audio.play().catch(err => {
-        console.log('Audio playback error:', err);
+    function startTextAnimation() {
+      lines.forEach((line, index) => {
+        line.style.animation = `fadeInUp 2s ease forwards ${delays[index]}s`;
       });
-
-      // Remove the event so it runs only once 👆
-      window.removeEventListener('click', startMusic);
-      window.removeEventListener('touchstart', startMusic);
+      psBox.style.animation = `fadeInUp 2s ease forwards ${psDelay}s`;
     }
 
-    // Listen for user's first interaction 😄
-    window.addEventListener('click', startMusic, { once: true });
-    window.addEventListener('touchstart', startMusic, { once: true });
+    function handlePopupClosed() {
+      startTextAnimation();
+      popup.style.display = 'none';
+    }
+
+    denyBtn.addEventListener('click', () => {
+      handlePopupClosed();
+      audio.pause();
+    });
+
+    allowBtn.addEventListener('click', () => {
+      handlePopupClosed();
+      audio.muted = false;
+      audio.play().catch(err => console.log('Audio error:', err));
+    });
+
+    audio.play().catch(() => {});
+
+    function startMusicOnInteraction() {
+      audio.muted = false;
+      audio.play().catch(err => console.log('Audio error:', err));
+      window.removeEventListener('click', startMusicOnInteraction);
+      window.removeEventListener('touchstart', startMusicOnInteraction);
+    }
+
+    const isAndroid = /Android/i.test(navigator.userAgent);
+
+    if (isAndroid) {
+      popup.style.display = 'flex';
+      lines.forEach(line => {
+        line.style.opacity = 0;
+        line.style.transform = 'translateY(20px)';
+        line.style.animation = 'none';
+      });
+      psBox.style.opacity = 0;
+      psBox.style.transform = 'translateY(20px)';
+      psBox.style.animation = 'none';
+    } else {
+      window.addEventListener('click', startMusicOnInteraction, { once: true });
+      window.addEventListener('touchstart', startMusicOnInteraction, { once: true });
+      startTextAnimation();
+    }
   </script>
 
 </body>
